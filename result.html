@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Classification Result</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f0;
+            text-align: center;
+            margin: 0;
+            padding: 0;
+        }
+        .container {
+            max-width: 600px;
+            margin: 50px auto;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        h1, h2, p {
+            color: #333;
+        }
+        img {
+            max-width: 100%;
+            height: auto;
+            margin-bottom: 20px;
+        }
+        .button {
+            display: inline-block;
+            padding: 10px 20px;
+            background-color: #4CAF50;
+            color: white;
+            text-decoration: none;
+            border-radius: 4px;
+            margin-top: 20px;
+            cursor: pointer;
+        }
+        .button:hover {
+            background-color: #45a049;
+        }
+    </style>
+</head>
+<body>
+    <div class="container" id="result-container">
+        <h1>Classification Result</h1>
+        <img src="{{ url_for('uploaded_file', filename=filename) }}" alt="Uploaded Image">
+        <h2>Predicted Class: {{ predicted_label }}</h2>
+        <p>Confidence: {{ confidence }}</p>
+        <a href="/" class="button">Classify Another Image</a>
+        <button class="button" id="save-screenshot">Save Screenshot</button>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/html2canvas@1.0.0-rc.7/dist/html2canvas.min.js"></script>
+    <script>
+        document.getElementById('save-screenshot').addEventListener('click', function() {
+            html2canvas(document.getElementById('result-container')).then(function(canvas) {
+                var link = document.createElement('a');
+                link.download = 'classification_result.png';
+                link.href = canvas.toDataURL('image/png');
+                link.click();
+            });
+        });
+    </script>
+</body>
+</html>
